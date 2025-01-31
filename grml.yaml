@@ -1,9 +1,33 @@
 version: 2
 project: hack-for-good
 
+env:
+    GOOGLE_APPLICATION_CREDENTIALS: ".config/hackathons-418309-ee4b589b4970.json"
+    PROJECT_ID: "672205156129"
+
+options:
+    model:
+        - gpt-4o-mini
+        - gpt-4o
+
 commands:
+    ask:
+        help: Ask the model a question
+        exec: |
+            curl -X POST http://localhost:8000/ask \
+                -H "Content-Type: application/json" \
+                -d '{"message": "What is the meaning of life?" }'
     deploy:
         help: Deploy the FastAPI application
-        exec: |
-            defang compose up
+        commands:
+            locally:
+                help: Deploy the FastAPI application locally
+                exec: |
+                    cd fastapi
+                    uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+
+            defang:
+                help: Deploy the FastAPI application
+                exec: |
+                    defang compose up
 
