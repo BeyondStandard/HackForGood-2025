@@ -11,6 +11,11 @@ import os
 app = FastAPI()
 secrets = SecretManager()
 secrets.init_secret("OpenAI")
+secrets.init_secret("LangChain")
+
+# Export to environment variables
+os.environ["OPENAI_API_KEY"] = secrets.get_secret("OpenAI")
+os.environ["LANGSMITH_API_KEY"] = secrets.get_secret("LangChain")
 
 # Mount the static directory to serve index.html
 app.mount("/templates", StaticFiles(directory="templates"), name="templates")
@@ -27,10 +32,6 @@ async def serve_index():
 @app.post("/ask")
 async def handle_ask(payload: AskPayload):
     chatbot = ChatBot(secrets.get_secret("OpenAI"))
-
-    files = [f"context/{filename}" for filename in os.listdir("context")]
-    chatbot.vectorize_files(files, chunk_size=1000, overlap=100)
-
     response = chatbot.ask(payload.message)
 
     return {"response": response}
