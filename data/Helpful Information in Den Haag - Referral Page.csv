@@ -1,0 +1,105 @@
+#KEY,#VALUE,#EXAMPLE value
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+"Last Updated Time
+#timestamp.last-updated",2025-01-28T13:16:42.807Z,
+,,
+"Text direction (Left-to-Right or Right-to-Left)
+#locale.dir",,"""ltr"" or ""rtl"" or ""auto"""
+"Default language
+#locale.language",en,"One of ""nl"", ""en"", ""pt-BR""
+See for options: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"
+"Alternative languages (for auto-translation)
+#locale.alternatives","en:English, nl:Nederlands, fr:Français, ar:العربية, pt:Português,  *:Other...","List: ""nl:Nederlands, en:English, ar:العربية"", MUST include default-language!
+In the format: ""<language-code>:<language-native-name>"" separated by comma's ("","")"
+"Label: Alternative languages explanation
+#locale.alternatives.explanation",* Translations via Google,"""Using Google Translate, also available in:"", ""Translate with Google Translate:"" or empty when using Sheet/Region-Per-Language"
+,,
+"Logo URL
+#logo",,
+"App/Site Name/title
+#name",,
+"Greeting/Heading
+#main.heading",Support in The Hague,
+"Introduction text
+#main.intro","This site is by the Netherlands Red Cross for people who are undocumented: without legal status or BSN. We do not share your personal details. 
+
+Find information for local services like legal support, health, and shelter.  
+
+Questions?
+Please contact our WhatsApp helpdesk: [+31 9 70 10 28 69 64](https://wa.me/3197010286964).
+Opening hours: Monday - Friday: 10:00 - 18:00. Weekends/Holidays: limited capacity.
+",
+,,
+"Label: Back Button
+#nav.back",Back,"""Back"", ""Previous"""
+"Label: Main Screen Button/Logo
+#nav.main",Main Screen,"""Main"", ""Home"", ""Start"""
+"Label: ""Last updated""
+#label.last-updated",,"""Last updated:"" or ""Up to date since:"""
+,,
+"Contact: Phone-number
+#contact.tel",,+31100000000
+"Contact: WhatsApp URL
+#contact.whatsapp",https://wa.me/3197010286964,https://wa.me/31600000000
+"Contact: Telegram URL
+#contact.telegram",,https://telegram.me/username
+"Notification text
+#main.notification",,"""**Warning** Please [contact us](/contact)"" or ""HSP **closed** from `8:00`-`11:00`"""
+,,
+"Label: Highlights - title
+#highlights.title",,"""Recent changes"" or ""Latest updates"""
+"Label: Highlights - ""no items""
+#highlights.items.0",,"""No recent changes."" or ""No updates."""
+"Label: Highlights - ""items changed: N""
+#highlights.items",,"""Items with changes:"" or ""Recently changed items:"" or ""Updated items:"""
+"Label: Highlights - CTA
+#highlights.cta",,"""Changes"", ""Updates"" or ""New!"""
+,,
+"Label: Search - page title
+#search.title",,"""Search"", ""Find"""
+"Label: Search - button action
+#search.cta",,
+"Label: Search - items
+#search.items",,"""Search results:"", ""Found:"""
+"Label: Search - ""no items""
+#search.items.0",,"""No results."", ""Nothing found."""
+,,
+"Label: Offer - Address
+#offer.address",,"""Address"", ""Location"""
+"Label: Offer - Phone
+#offer.phone",,"""Phone"", ""Phone-numbers"""
+"Label: Offer - E-mail
+#offer.email",,"""E-mail"""
+"Label: Offer - Website
+#offer.website",,"""Website"", ""Online:"
+"Label: Offer - Opening Week
+#offer.open.week",,"""Opening Hours - Weekdays"", ""Open Mo-Vr"", ""Accessibility"""
+"Label: Offer - Opening Weekend
+#offer.open.weekend",,"""Opening Hours - Weekends"", ""Open Sa-Su"""
+"Label: Offer - Need to Know
+#offer.need-to-know",,"""First Things First"", ""What do you need to know?"""
+,,
+"Feedback: Question
+#feedback.question",,"""Was this helpful?"""
+"Feedback: Positive Answer
+#feedback.answer.positive",,"""Yes"", ""Like"", ""Ok"""
+"Feedback: Negative Answer
+#feedback.answer.negative",,"""No"", ""Hate"", ""Nope"""
+"Feedback: Thanks
+#feedback.thanks",,"""Thank you for sharing your opinion"""
+"Feedback: Positive response message
+#feedback.result.positive",,"""We are happy you found this information helpful."""
+"Feedback: Negative response message
+#feedback.result.negative",,"""We're sorry you didn't find this information helpful. Share more feedback by filling our anonymous survey."""
+"Feedback: Share CTA
+#feedback.share-cta",,"""Share feedback"", ""Let us know"" or similar"
+"Feedback Share-URL
+#contact.feedback-url",https://ee.ifrc.org/x/Lr0ZptNO?d%5BDo_you_have_any_othe_improve_this_website%5D=On:%20{URL}%20%0A%0A,"The placeholder ""{URL}"" can be used to insert the URL of the page where the link is clicked.
+For e-mail, use: ""mailto:contact@example.org?subject=Feedback%20on%20URL:%20{URL}"", for a web-form, use: ""https://example.org/feedback-form?text=Feedback%20on%20URL:%20{URL}"""
