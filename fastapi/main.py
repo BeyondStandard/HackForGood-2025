@@ -34,5 +34,5 @@ async def handle_ask(payload: AskPayload):
     chatbot = ChatBot(secrets.get_secret("OpenAI"))
     response = chatbot.ask(payload.message)
 
-    return {"response": response}
+    return response
 

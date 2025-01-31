@@ -2,9 +2,12 @@ from typing import List, Optional
 import uuid
 import os
 
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.chains import RetrievalQA
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains import create_retrieval_chain
 from langchain_chroma import Chroma
+
 
 class ChatBot:
     """
@@ -28,6 +31,20 @@ class ChatBot:
         :param persist_directory: Directory for local Chroma DB persistence.
         :param collection_name:   The name of the Chroma collection to store embeddings.
         """
+        self.prompt = ChatPromptTemplate([
+            (
+                "system",
+                "You are an assistant for question-answering tasks."
+                "Use the following pieces of retrieved context to answer the question."
+                "If you don't know the answer, just say that you don't know."
+                "Use three sentences maximum and keep the answer concise.\n"
+                "Context: {context}\n\n"
+                "Even if you know the answer to the question but it's not mentioned"
+                "in the context, you should say you don't think you can help with that."
+            ),
+            ("human", "{input}")
+        ])
+
         self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
         self.chat_model = chat_model or os.getenv("MODEL", "gpt-4o-mini")
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
@@ -91,28 +108,31 @@ class ChatBot:
         if all_texts:
             self.vectorstore.add_texts(texts=all_texts, metadatas=all_metadatas)
 
-    def ask(self, user_input: str, top_k: int = 5, max_tokens: int = 200, temperature: float = 0.7) -> dict:
+    def ask(self, user_input: str, top_k: int = 5, max_tokens: int = 500, temperature: float = 0.7) -> dict:
         """
         Generate a concise answer using the top_k retrieved chunks as context.
-
-        :param user_input:  The user's question.
-        :param top_k:       Number of chunks to retrieve from the store.
-        :param max_tokens:  Max tokens in the final LLM answer.
-        :param temperature: Sampling temperature for creativity.
-        :return:            The chatbot answer as a string.
         """
-
         retriever = self.vectorstore.as_retriever(search_kwargs={"k": top_k})
-        qa_chain = RetrievalQA.from_chain_type(
+
+        stuff_documents_chain = create_stuff_documents_chain(
             llm=ChatOpenAI(
                 model=self.chat_model,
                 api_key=self.api_key,
                 temperature=temperature,
                 max_tokens=max_tokens
             ),
-            chain_type="stuff",  # You can pick "stuff", "map_reduce", "refine", etc.
-            retriever=retriever,
-            return_source_documents=False  # Set to True if you also want the source docs
+            prompt=self.prompt
         )
 
-        return qa_chain.invoke(user_input)
+        rag_chain = create_retrieval_chain(
+            retriever=retriever,
+            combine_docs_chain=stuff_documents_chain,
+        )
+
+        response_dict = rag_chain.invoke({"input": user_input})
+
+        return {
+            "query": user_input,
+            "result": response_dict["answer"]
+        }
+

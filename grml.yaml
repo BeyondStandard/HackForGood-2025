@@ -25,9 +25,10 @@ commands:
         args:
             - message
         exec: |
-            curl -X POST http://localhost:8000/ask \
+            curl -s -X POST http://localhost:8000/ask \
                 -H "Content-Type: application/json" \
-                -d "{\"message\": \"${message}\"}"
+                -d "{\"message\": \"${message}\"}" | jq -r '.result'
+
     deploy:
         help: Deploy the FastAPI application
         commands:
