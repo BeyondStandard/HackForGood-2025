@@ -16,7 +16,7 @@ commands:
         exec: |
             curl -X POST http://localhost:8000/ask \
                 -H "Content-Type: application/json" \
-                -d '{"message": "What is the meaning of life?" }'
+                -d '{"message": "I need a doctor" }'
     deploy:
         help: Deploy the FastAPI application
         commands:

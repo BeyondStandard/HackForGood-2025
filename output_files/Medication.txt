@@ -1,0 +1,33 @@
+Medication
+
+Offer Name: How to find a pharmacy
+What service?: At a pharmacy you can get medicines. There are some pharmacies that are specialized in helping undocumented people.
+What do you need to know?: You often need a referral from a GP (general practitioner) in order to get the medicine. Undocumented people pay €5 per medicine instead of the full price. Here is a list of pharmacies specialized in helping undocumented people:
+
+**Apotheek Vrolijk**
+• Address: Ambachtsgaarde 170, 2542 EJ Den Haag
+[Show on Google Maps](https://www.google.com/maps/place/Apotheek+Vrolijk/@52.034802,4.2623421,17z/data=!3m1!4b1!4m6!3m5!1s0x47c5b15dd24b3847:0xaf80f6131e15fc79!8m2!3d52.034802!4d4.264917!16s%2Fg%2F1thp_x7p?entry=ttu)
+• Opening Hours: Monday - Friday: 8:30 - 17:30 
+
+**BENU Apotheek De Wasserij**
+• Address: Asmansweg 6, 2571 BK Den Haag
+[Show on Google Maps](https://www.google.com/maps/place/BENU+Apotheek+De+Wasserij/@52.073412,4.2878365,17z/data=!3m1!4b1!4m6!3m5!1s0x47c5b0d4ffbc4a23:0x1222e03c39057010!8m2!3d52.073412!4d4.2904114!16s%2Fg%2F1ptwt21zm?entry=ttu)
+• Opening Hours: Monday - Friday: 8:00 - 17:30 
+
+**BENU Apotheek Wateringse Veld**
+• Address: Laan van Wateringse Veld 322, 2548 CH Den Haag
+[Show on Google Maps](https://www.google.com/maps/place/BENU+Apotheek+Wateringseveld/@52.032855,4.2833331,17z/data=!3m1!4b1!4m6!3m5!1s0x47c5b154bdfe7833:0x923ddbb085ef0ea7!8m2!3d52.032855!4d4.285908!16s%2Fg%2F1hm4sm5lv?entry=ttu)
+• Opening Hours: Monday - Friday: 8:00 - 17:30
+
+**BENU Apotheek Laakkwartier**
+• Address: Goeverneurlaan 519, 2523 CE Den Haag
+[Show on Google Maps](https://www.google.com/maps/place/BENU+Apotheek+Laakkwartier/@52.05719,4.3148101,17z/data=!3m1!4b1!4m6!3m5!1s0x47c5b7d29de0aee5:0x219d387cc203e2af!8m2!3d52.05719!4d4.317385!16s%2Fg%2F11gxnw2131?entry=ttu)
+• Opening Hours: Monday - Friday: 8:00 -12:30 & 13:30 - 17:30
+
+**Haagse Transvaal Bereidingsapotheek**
+• Address: Kempstraat 113, 2572 GC Den Haag
+[Show on Google Maps](https://www.google.com/maps/place/Transvaal+Apotheek/@52.0655972,4.291415,17z/data=!3m1!4b1!4m6!3m5!1s0x47c5b6d4a1a98859:0xa2a1dcfbea33c973!8m2!3d52.0655972!4d4.2939899!16s%2Fg%2F1vvr5dh3?entry=ttu)
+• Opening Hours: 
+Monday - Friday: 8:00 - 18:00 
+Saturday: 9:30 - 13:30 
+
