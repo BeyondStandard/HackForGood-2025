@@ -1,0 +1,9 @@
+version: 2
+project: hack-for-good
+
+commands:
+    deploy:
+        help: Deploy the FastAPI application
+        exec: |
+            defang compose up
+
