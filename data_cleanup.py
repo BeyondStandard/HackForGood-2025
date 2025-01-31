@@ -21,7 +21,7 @@ data_rows.sort(key=lambda x: x[0])
 grouped_rows = itertools.groupby(data_rows, key=lambda x: x[0])
 
 # Output directory
-output_dir = "output_files"
+output_dir = "fastapi/context"
 os.makedirs(output_dir, exist_ok=True)
 
 # Process groups and write to files

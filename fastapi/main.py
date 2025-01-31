@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from secret_manager import SecretManager
 from chatbot import ChatBot
 
+import os
+
 app = FastAPI()
 secrets = SecretManager()
 secrets.init_secret("OpenAI")
@@ -25,6 +27,11 @@ async def serve_index():
 @app.post("/ask")
 async def handle_ask(payload: AskPayload):
     chatbot = ChatBot(secrets.get_secret("OpenAI"))
+
+    files = [f"context/{filename}" for filename in os.listdir("context")]
+    chatbot.vectorize_files(files, chunk_size=1000, overlap=100)
+
     response = chatbot.ask(payload.message)
+
     return {"response": response}
 
