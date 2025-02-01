@@ -31,6 +31,10 @@ async def serve_index():
     with open("templates/index.html", "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
 @app.post("/chat")
 async def chat(payload: AskPayload):
     response = await asyncio.create_task(chatbot.ask(payload.message))

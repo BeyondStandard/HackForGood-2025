@@ -1,5 +1,12 @@
-uwsgi
-fastapi
-uvicorn
-jinja2
-python-multipart
+python-dotenv~=1.0.1
+elevenlabs~=1.50.6
+pydantic~=2.10.6
+fastapi~=0.115.8
+aiohttp~=3.11.11
+langchain~=0.3.17
+langchain-openai~=0.3.3
+langchain-core~=0.3.33
+langchain-chroma~=0.2.1
+openpyxl~=3.1.5
+
+git+https://IceboxDev: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@github.com/IceboxDev/SecretManager.git

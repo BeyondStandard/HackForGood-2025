@@ -19,6 +19,13 @@ options:
         - gpt-4o-mini
         - gpt-4o
 
+    TTS_MODEL:
+        - eleven_flash_v2_5
+        - eleven_flash_v2
+        - eleven_multilingual_v2
+        - eleven_multilingual_sts_v2
+        - eleven_english_sts_v2
+
 commands:
     stream:
         help: Ask the model a question and stream the response
@@ -53,4 +60,10 @@ commands:
                 help: Deploy the FastAPI application
                 exec: |
                     defang compose up
+
+    tts:
+        help: Convert text to speech
+        exec: |
+            cd fastapi
+            python tts.py
 
