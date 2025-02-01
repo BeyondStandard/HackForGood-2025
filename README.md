@@ -2,9 +2,11 @@
 
 ## Demonstration
 
-💻 See our website final product at https://hackathon-website-wheat.vercel.app/)!
+💻 **See our website** final product at https://hackathon-website-wheat.vercel.app/)
 
-📞 Call +31 970 102 500 66 to speak with our conversational AI and get the help you need!
+📱 Chat with our **Telegram bot** at [this link](https://t.me/RedCrossHagueBot) to find the information you want
+
+📞 **Call +31 970 102 500 66** to speak with our conversational AI and get the help you need
 
 (If the phone doesn't pick up then the fellow participants might be overloading the line, please try again later)
 
@@ -54,6 +56,7 @@ Navigate to [website URL](https://hackathon-website-wheat.vercel.app/) to explor
 
 ### 4. Multi-Channel Support  
 - For users who prefer direct communication, a **phone number** connects to the chatbot using Twilio’s speech processing integration.
+- A Telegram bot can also reply with relevant info for users who prefer to text.
 
 ### 5. Automated and Updated CMS System  
 - Data integrity is maintained through an easy-to-use CMS that automatically updates the entire platform. Adding new content is fast, secure, and requires minimal effort.
