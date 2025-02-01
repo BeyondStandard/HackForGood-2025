@@ -60,10 +60,3 @@ commands:
                 help: Deploy the FastAPI application
                 exec: |
                     defang compose up
-
-    tts:
-        help: Convert text to speech
-        exec: |
-            cd fastapi
-            python tts.py
-

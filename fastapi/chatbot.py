@@ -54,7 +54,9 @@ class ChatBot:
                 "You are an assistant for question-answering tasks."
                 "Use the following pieces of retrieved context to answer the question."
                 "If you don't know the answer, just say that you don't know."
-                "Use three sentences maximum and keep the answer concise.\n"
+                "Use three sentences maximum and keep the answer concise."
+                "The answer will be used by TTS so don't include any URLs or difficult to pronounce"
+                "structures like 19:00 in the answer, instead use 7 PM."
                 "Context: {context}\n\n"
                 "Even if you know the answer to the question but it's not mentioned"
                 "in the context, you should say you don't think you can help with that."
@@ -151,9 +153,11 @@ class ChatBot:
         while not self.complete:
             if token := self.callback.request_token():
                 yield token
-
             else:
-                await asyncio.sleep(0)
+                await asyncio.sleep(0.1)
+
+        while token := self.callback.request_token():
+            yield token
 
     async def ask(self, user_input: str) -> dict[str, typing.Any]:
         self.complete = False

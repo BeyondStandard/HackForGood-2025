@@ -2,6 +2,7 @@ from twilio.twiml.voice_response import VoiceResponse
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Form, Response
+from fastapi.middleware.cors import CORSMiddleware
 
 from secret_manager import SecretManager
 from chatbot import ChatBot
@@ -12,6 +13,14 @@ import logging
 import os
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 secrets = SecretManager()
 secrets.init_secret("OpenAI")
 secrets.init_secret("LangChain")
@@ -26,6 +35,7 @@ app.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 logger = logging.getLogger('uvicorn.error')
 
+ACTIVE_STREAMS = {}
 
 # Data model for POST payload
 class AskPayload(pydantic.BaseModel):
@@ -52,12 +62,38 @@ async def stream(payload: AskPayload):
 
 # noinspection PyPep8Naming
 @app.post("/process-speech")
-async def process_speech(SpeechResult: str = Form(...)):
-    logger.info("Received a request to process speech")
-    logger.info(f"Speech result: {SpeechResult}")
+async def process_speech(
+        CallSid: str = Form(...),
+        SpeechResult: str = Form(...),
+):
+    _ = asyncio.create_task(chatbot.ask(SpeechResult))
+    ACTIVE_STREAMS[CallSid] = chatbot.response()
 
-    gpt_response = await asyncio.create_task(chatbot.ask(SpeechResult))
     response = VoiceResponse()
-    response.say(gpt_response["answer"])
+    response.say("Let me check that for you.")
+    response.redirect(
+        url=f"https://iceboxdev-fastapi--8000.prod1a.defang.dev/output?call_sid={CallSid}",
+        method="GET"
+    )
 
     return Response(content=str(response), media_type="application/xml")
+
+@app.get("/output")
+async def output(call_sid: str):
+    out = ""
+
+    async for chunk in ACTIVE_STREAMS[call_sid]:
+        out += chunk
+        if "." in chunk or "?" in chunk or "!" in chunk:
+            response = VoiceResponse()
+            response.say(out)
+            response.append(response.redirect(f"https://iceboxdev-fastapi--8000.prod1a.defang.dev/output?call_sid={call_sid}", method='GET'))
+            logger.info(f"Returning: {out}")
+            return Response(content=str(response), media_type="application/xml")
+
+    else:
+        logger.info("Finished outputting stream.")
+        del ACTIVE_STREAMS[call_sid]
+
+        response = VoiceResponse()
+        return Response(content=str(response), media_type="application/xml")
