@@ -1,7 +1,7 @@
+from twilio.twiml.voice_response import VoiceResponse
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI, WebSocket
-
+from fastapi import FastAPI, Form, Response
 
 from secret_manager import SecretManager
 from chatbot import ChatBot
@@ -9,8 +9,6 @@ from chatbot import ChatBot
 import pydantic
 import asyncio
 import logging
-import base64
-import json
 import os
 
 app = FastAPI()
@@ -33,11 +31,6 @@ logger = logging.getLogger('uvicorn.error')
 class AskPayload(pydantic.BaseModel):
     message: str
 
-def twiml(resp):
-    resp = HTMLResponse(str(resp))
-    resp.headers['Content-Type'] = 'text/xml'
-    return resp
-
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
     with open("templates/index.html", "r", encoding="utf-8") as f:
@@ -57,9 +50,14 @@ async def stream(payload: AskPayload):
     _ = asyncio.create_task(chatbot.ask(payload.message))
     return StreamingResponse(chatbot.response(), media_type="text/plain")
 
-@app.websocket("/process-text")
-async def process_text(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        logger.info(f"Received data: {data}")
+# noinspection PyPep8Naming
+@app.post("/process-speech")
+async def process_speech(SpeechResult: str = Form(...)):
+    logger.info("Received a request to process speech")
+    logger.info(f"Speech result: {SpeechResult}")
+
+    gpt_response = await asyncio.create_task(chatbot.ask(SpeechResult))
+    response = VoiceResponse()
+    response.say(gpt_response["answer"])
+
+    return Response(content=str(response), media_type="application/xml")
