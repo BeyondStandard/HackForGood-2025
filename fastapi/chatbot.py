@@ -1,12 +1,27 @@
-from typing import List, Optional
-import uuid
-import os
-
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain.chains import create_retrieval_chain
 from langchain_chroma import Chroma
+
+import asyncio
+import typing
+import uuid
+import os
+
+
+class TokenCallbackHandler(BaseCallbackHandler):
+    def __init__(self):
+        super().__init__()
+        self.tokens = []
+
+    def on_llm_new_token(self, token: str, **kwargs) -> None:
+        self.tokens.append(token)
+
+    def request_token(self):
+        if self.tokens:
+            return self.tokens.pop(0)
 
 
 class ChatBot:
@@ -18,9 +33,9 @@ class ChatBot:
 
     def __init__(
             self,
-            api_key: Optional[str] = None,
-            chat_model: Optional[str] = None,
-            embedding_model: Optional[str] = None,
+            api_key: typing.Optional[str] = None,
+            chat_model: typing.Optional[str] = None,
+            embedding_model: typing.Optional[str] = None,
             persist_directory: str = "chromadb_storage",
             collection_name: str = "chatbot_embeddings"
     ):
@@ -31,6 +46,8 @@ class ChatBot:
         :param persist_directory: Directory for local Chroma DB persistence.
         :param collection_name:   The name of the Chroma collection to store embeddings.
         """
+        self.complete = None
+        self.callback = TokenCallbackHandler()
         self.prompt = ChatPromptTemplate([
             (
                 "system",
@@ -62,6 +79,25 @@ class ChatBot:
             persist_directory=self.persist_directory
         )
 
+        retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
+
+        stuff_documents_chain = create_stuff_documents_chain(
+            llm=ChatOpenAI(
+                model=self.chat_model,
+                streaming=True,
+                api_key=self.api_key,
+                callbacks=[self.callback],
+                temperature=0.7,
+                max_tokens=1000
+            ),
+            prompt=self.prompt
+        )
+
+        self.rag_chain = create_retrieval_chain(
+            retriever=retriever,
+            combine_docs_chain=stuff_documents_chain,
+        )
+
     @staticmethod
     def _read_file(file_path: str) -> str:
         """Simple text reader."""
@@ -69,7 +105,7 @@ class ChatBot:
             return f.read()
 
     @staticmethod
-    def _chunk_text(text: str, chunk_size: int = 1000, overlap: int = 100) -> List[str]:
+    def _chunk_text(text: str, chunk_size: int = 1000, overlap: int = 100) -> list[str]:
         """
         Chunk the text into overlapping segments to help with context continuity.
         """
@@ -84,7 +120,7 @@ class ChatBot:
 
         return chunks
 
-    def vectorize_files(self, file_paths: List[str], chunk_size: int = 1000, overlap: int = 100) -> None:
+    def vectorize_files(self, file_paths: list[str], chunk_size: int = 1000, overlap: int = 100) -> None:
         """
         Reads the files, splits into chunks, and adds them to the LangChain Chroma store.
         """
@@ -108,31 +144,27 @@ class ChatBot:
         if all_texts:
             self.vectorstore.add_texts(texts=all_texts, metadatas=all_metadatas)
 
-    def ask(self, user_input: str, top_k: int = 5, max_tokens: int = 500, temperature: float = 0.7) -> dict:
-        """
-        Generate a concise answer using the top_k retrieved chunks as context.
-        """
-        retriever = self.vectorstore.as_retriever(search_kwargs={"k": top_k})
+    def _ask(self, message: str) -> dict[str, typing.Any]:
+        return self.rag_chain.invoke({"input": message})
 
-        stuff_documents_chain = create_stuff_documents_chain(
-            llm=ChatOpenAI(
-                model=self.chat_model,
-                api_key=self.api_key,
-                temperature=temperature,
-                max_tokens=max_tokens
-            ),
-            prompt=self.prompt
-        )
+    async def _response(self):
+        while not self.complete:
+            if token := self.callback.request_token():
+                yield token
 
-        rag_chain = create_retrieval_chain(
-            retriever=retriever,
-            combine_docs_chain=stuff_documents_chain,
-        )
+            else:
+                await asyncio.sleep(0)
 
-        response_dict = rag_chain.invoke({"input": user_input})
+    async def ask(self, user_input: str) -> dict[str, typing.Any]:
+        self.complete = False
+        loop = asyncio.get_running_loop()
+        result = await loop.run_in_executor(None, self._ask, user_input)
 
-        return {
-            "query": user_input,
-            "result": response_dict["answer"]
-        }
+        self.complete = True
+        return result
+
+    async def response(self):
+        async for item in self._response():
+            yield item
+
 

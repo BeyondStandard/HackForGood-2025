@@ -20,14 +20,25 @@ options:
         - gpt-4o
 
 commands:
-    ask:
+    stream:
+        help: Ask the model a question and stream the response
+        args:
+            - message
+        exec: |
+            curl -N \
+              -X POST \
+              -H "Content-Type: application/json" \
+              -d "{\"message\": \"${message}\"}" \
+              "http://localhost:8000/stream"
+
+    chat:
         help: Ask the model a question
         args:
             - message
         exec: |
-            curl -s -X POST http://localhost:8000/ask \
+            curl -s -X POST http://localhost:8000/chat \
                 -H "Content-Type: application/json" \
-                -d "{\"message\": \"${message}\"}" | jq -r '.result'
+                -d "{\"message\": \"${message}\"}"
 
     deploy:
         help: Deploy the FastAPI application
