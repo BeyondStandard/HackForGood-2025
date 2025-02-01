@@ -88,7 +88,7 @@ class ChatBot:
                 api_key=self.api_key,
                 callbacks=[self.callback],
                 temperature=0.7,
-                max_tokens=1000
+                max_tokens=500
             ),
             prompt=self.prompt
         )
