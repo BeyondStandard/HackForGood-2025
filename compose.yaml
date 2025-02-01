@@ -8,14 +8,9 @@ services:
       - target: 8000
         published: 8000
         mode: ingress
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     deploy:
       resources:
         limits:
-          memory: 512M   # Max memory usage limit
+          memory: 512M
         reservations:
-          memory: 256M   # Ensures 256MB is always available
+          memory: 256M
