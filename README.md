@@ -52,14 +52,6 @@ Built for the Red Cross, this platform offers an intuitive interface and a multi
 
 ---
 
-## Usage
-
-### Accessing the Website
-Navigate to [website URL](http://bit.ly/RedCrossHague) to explore the demo. Key services such as shelter information and frequently asked questions are accessible directly from the homepage.
-
-### Chatbot Interaction
-- **Text-based:** Type questions directly into the chatbot interface.
-- **Voice-based:** Dial +31 970 102 500 66 to speak to the chatbot and receive spoken responses via Twilio’s integration.
 
 ---
 
@@ -92,7 +84,31 @@ Navigate to [website URL](http://bit.ly/RedCrossHague) to explore the demo. Key 
 
 ---
 
+## Technical Details
+
+This project is built using the following technologies and services:
+
+- **Backend:** FastAPI for handling asynchronous requests efficiently.
+- **Twilio Integration:** For speech-based interactions via phone.
+- **Sanity:** Content Management Software platform used to store data for the website.
+- **Data Management:** Retrieval-Augmented Generation (RAG) for dynamic content extraction.
+- **Conversational AI:** LangChain for enhanced context retrieval and natural language understanding.
+- **Docker:** Containerized deployment for load managing.
+- **Hosting:** Hosted on AWS.
+- **LLM:** OpenAI ChatAPI for responses (can be swapped out).
+
+---
+
+## Usage
+
+### Accessing the Website
+Navigate to [website URL](http://bit.ly/RedCrossHague) to explore the demo. Key services such as shelter information and frequently asked questions are accessible directly from the homepage.
+
+### Chatbot Interaction
+- **Text-based:** Type questions directly into the chatbot interface.
+- **Voice-based:** Dial +31 970 102 500 66 to speak to the chatbot and receive spoken responses via Twilio’s integration.
 <details>
+- **Telegram:** Chat with our **Telegram bot** at [this link](https://t.me/RedCrossHagueBot) to find the information you want
   <summary><strong>Example: Running the Platform Locally</strong></summary>
 
 ```bash
