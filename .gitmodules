@@ -1,0 +1,9 @@
+[submodule "telegrambot"]
+	path = telegrambot
+	url = https://github.com/akshayballal95/telegrambot
+[submodule "hackathon-website"]
+	path = hackathon-website
+	url = https://github.com/akshayballal95/hackathon-website
+[submodule "studio-hackathon"]
+	path = studio-hackathon
+	url = https://github.com/akshayballal95/studio-hackathon
