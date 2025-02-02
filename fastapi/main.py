@@ -53,12 +53,12 @@ def health_check():
 @app.post("/chat")
 async def chat(payload: AskPayload):
     response = await asyncio.create_task(chatbot.ask(payload.message))
-    return response["answer"]
+    return response
 
 @app.post("/stream")
 async def stream(payload: AskPayload):
-    _ = asyncio.create_task(chatbot.ask(payload.message))
-    return StreamingResponse(chatbot.response(), media_type="text/plain")
+    stream_generator = chatbot.stream_ask(payload.message)
+    return StreamingResponse(stream_generator, media_type="text/plain")
 
 # noinspection PyPep8Naming
 @app.post("/process-speech")
@@ -66,8 +66,7 @@ async def process_speech(
         CallSid: str = Form(...),
         SpeechResult: str = Form(...),
 ):
-    _ = asyncio.create_task(chatbot.ask(SpeechResult))
-    ACTIVE_STREAMS[CallSid] = chatbot.response()
+    ACTIVE_STREAMS[CallSid] = chatbot.stream_ask(SpeechResult)
 
     response = VoiceResponse()
     response.say("Let me check that for you.")
@@ -76,6 +75,7 @@ async def process_speech(
         method="GET"
     )
 
+    logger.info(f"Processing speech: {SpeechResult}")
     return Response(content=str(response), media_type="application/xml")
 
 @app.get("/output")
