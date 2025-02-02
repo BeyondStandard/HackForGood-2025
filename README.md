@@ -21,14 +21,16 @@
 
 ---
 
-## Demonstration
+## Demonstration  <img src="img/logo.png" align="right" width="100" />
 
-💻 **See our website** final product at [https://hackathon-website-wheat.vercel.app/](https://hackathon-website-wheat.vercel.app/)
+💻 **See our website** final product at [http://bit.ly/RedCrossHague](http://bit.ly/RedCrossHague)
 
 📱 Chat with our **Telegram bot** at [this link](https://t.me/RedCrossHagueBot) to find the information you want
 
-📞 **Call +31 970 102 500 66** to speak with our conversational AI and get the help you need  
-*(If the phone doesn't pick up then the fellow participants might be overloading the line, please try again later)*
+<!-- Make the phone number pop! -->
+> ### **📞 HOTLINE**  
+> ### **+31 970 102 500 66**  
+> *(If the phone doesn't pick up then the fellow participants might be overloading the line, please try again later)*
 
 ---
 
@@ -53,7 +55,7 @@ Built for the Red Cross, this platform offers an intuitive interface and a multi
 ## Usage
 
 ### Accessing the Website
-Navigate to [website URL](https://hackathon-website-wheat.vercel.app/) to explore the demo. Key services such as shelter information and frequently asked questions are accessible directly from the homepage.
+Navigate to [website URL](http://bit.ly/RedCrossHague) to explore the demo. Key services such as shelter information and frequently asked questions are accessible directly from the homepage.
 
 ### Chatbot Interaction
 - **Text-based:** Type questions directly into the chatbot interface.
@@ -61,7 +63,10 @@ Navigate to [website URL](https://hackathon-website-wheat.vercel.app/) to explor
 
 ---
 
-![Website Demo GIF](img/website.gif)
+<!-- Centered GIF -->
+<p align="center">
+  <img src="img/website.gif" alt="Website Demo GIF" />
+</p>
 
 ---
 
