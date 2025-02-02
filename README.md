@@ -21,9 +21,9 @@
 
 ---
 
-## Demonstration  <img src="img/logo.png" align="right" width="100" />
+## Demonstration
 
-💻 **See our website** final product at [http://bit.ly/RedCrossHague](http://bit.ly/RedCrossHague)
+💻 **See our website** final product at [http://bit.ly/RedCrossHague](http://bit.ly/RedCrossHague) <img src="img/logo.png" align="right" width="100" />
 
 📱 Chat with our **Telegram bot** at [this link](https://t.me/RedCrossHagueBot) to find the information you want
 
